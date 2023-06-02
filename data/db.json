@@ -1,0 +1,18 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "datetime": "niedziela, 7 maja 2023 22:44:03",
+      "updated": "czwartek, 11 maja 2023 20:47:02",
+      "title": "Post #1",
+      "body": "Lorem ipsum dolor sit amet"
+    },
+    {
+      "id": 4,
+      "datetime": "czwartek, 11 maja 2023 20:28:49",
+      "updated": "piątek, 12 maja 2023 16:11:28",
+      "title": "Post #2 ",
+      "body": "edited on...again"
+    }
+  ]
+}
