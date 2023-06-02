@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react'
-import DataContext from './context/DataContext'
+import { DataContext } from './context/DataContext'
 import { useHistory } from 'react-router-dom'
 // import api from './api/posts'
 import { db } from './api/firestore'
@@ -10,6 +10,7 @@ const CreatePost = () => {
   const [postBody, setPostBody] = useState('')
   const { posts, setPosts } = useContext(DataContext)
   const history = useHistory()
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 

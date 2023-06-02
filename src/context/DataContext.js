@@ -1,24 +1,25 @@
 import { createContext, useState, useEffect } from 'react'
-import useAxiosFetch from '../hooks/useAxiosFetch'
 import useFirestore from '../hooks/useFirestore'
-import api from '../api/posts'
+import { auth } from '../api/firestore'
 
-const DataContext = createContext({})
+export const DataContext = createContext({})
 
-export const DataProvider = ({ children }) => {
+const DataProvider = ({ children }) => {
   const [search, setSearch] = useState('')
   const [posts, setPosts] = useState([])
   const [searchResults, setSearchResults] = useState([])
-
+  const [currentUser, setCurrentUser] = useState(null)
+  const [loading, setLoading] = useState(true)
   // custom hooks
   // const { data, isLoading, fetchError } = useAxiosFetch(
   //   api.defaults.baseURL + '/posts'
   // )
+
   const { data, isLoading, fetchError } = useFirestore('/posts')
 
   useEffect(() => {
-    setPosts(data)
-  }, [data])
+    if (currentUser) setPosts(data)
+  }, [currentUser, data])
 
   useEffect(() => {
     const searchPosts = posts.filter(
@@ -28,6 +29,15 @@ export const DataProvider = ({ children }) => {
     )
     setSearchResults(searchPosts.reverse())
   }, [posts, search])
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setCurrentUser(user)
+      setLoading(false)
+    })
+    console.log('use effect runs')
+    return () => unsubscribe()
+  }, [])
 
   return (
     <DataContext.Provider
@@ -39,6 +49,9 @@ export const DataProvider = ({ children }) => {
         isLoading,
         posts,
         setPosts,
+        currentUser,
+        setCurrentUser,
+        loading,
       }}
     >
       {children}
@@ -46,4 +59,4 @@ export const DataProvider = ({ children }) => {
   )
 }
 
-export default DataContext
+export default DataProvider

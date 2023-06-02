@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
 // import api from './api/posts'
-import DataContext from './context/DataContext'
+import { DataContext } from './context/DataContext'
 import { db } from './api/firestore'
 import { doc, getDoc, updateDoc } from 'firebase/firestore'
 

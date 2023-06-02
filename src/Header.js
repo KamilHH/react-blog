@@ -1,18 +1,27 @@
-import useWindowSize from './hooks/useWindowSize'
-import { FaMobileAlt, FaTabletAlt, FaLaptop } from 'react-icons/fa'
+import { useContext } from 'react'
+import { Link } from 'react-router-dom'
+import { DataContext } from './context/DataContext'
+import LogoutButton from './LogoutButton'
 
 const Header = ({ title }) => {
-  const { width } = useWindowSize()
+  const { currentUser } = useContext(DataContext)
+
   return (
     <header className='Header'>
       <h1>{title}</h1>
-      {width < 768 ? (
-        <FaMobileAlt />
-      ) : width < 1024 ? (
-        <FaTabletAlt />
-      ) : (
-        <FaLaptop />
-      )}
+      <section className='container'>
+        {!currentUser && (
+          <ul>
+            <li>
+              <Link to='/register'>Register</Link>
+            </li>
+            <li>
+              <Link to='/login'>Log In</Link>
+            </li>
+          </ul>
+        )}
+        {currentUser && <LogoutButton />}
+      </section>
     </header>
   )
 }
